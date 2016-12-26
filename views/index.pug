@@ -1,0 +1,50 @@
+doctype html
+html.
+  <head><link rel="icon" href="/favicon.ico" /></head>
+  <h1>File Uploads to S3</h1>
+
+  <label>Upload File</label>
+  <input id="target-file" type="file"/>
+  <button onclick="getSignedURL()">Upload</button>
+  
+  <script>
+  //Gets the signed URL, then uploads the file with the returned URL
+    function getSignedURL(){
+      var file = document.getElementById("target-file").files[0],
+        xhttp = new XMLHttpRequest(),
+        requestParams = {
+          //What the name of the object will be in the S3 bucket
+          Key: file.name,
+          ContentType: file.type,
+          //How many seconds the URL will be valid for
+          Expires: 60,
+          //The permission for the file
+          ACL: 'public-read',
+        };
+  
+      xhttp.open('POST', '/s3/signedurl', true);
+      xhttp.onreadystatechange = function() {
+        if (xhttp.readyState == 4 && xhttp.status == 200) {
+          body = JSON.parse(xhttp.response);
+          //Use the signed URL to make the request
+          uploadFile(body.signedRequest, file);
+        }
+      };
+      xhttp.send(JSON.stringify(requestParams));
+    }
+    
+    /**
+    * @param url - The signed URL
+    * @param file - the file to be uploaded
+    */
+    function uploadFile(url, file){
+      var xhttp = new XMLHttpRequest();
+      xhttp.open('PUT', url, true);
+      xhttp.onreadystatechange = function() {
+        if (xhttp.readyState == 4 && xhttp.status == 200) {
+          alert('Uploaded File!');
+        }
+      };
+      xhttp.send(file);
+    }
+  </script>

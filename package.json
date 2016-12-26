@@ -1,0 +1,24 @@
+{
+  "name": "s3-fileupload-example",
+  "version": "1.0.0",
+  "description": "An Example of uploading files directly to S3 from a browser.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jacksonStone/s3-fileupload-example.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jacksonStone/s3-fileupload-example/issues"
+  },
+  "homepage": "https://github.com/jacksonStone/s3-fileupload-example#readme",
+  "dependencies": {
+    "aws-sdk": "^2.7.14",
+    "express": "^4.14.0",
+    "pug": "^2.0.0-beta6"
+  }
+}
